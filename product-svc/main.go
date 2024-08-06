@@ -1,46 +1,23 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/raspiantoro/golang-marketplace/product-svc/internal/handler"
+	"github.com/raspiantoro/golang-marketplace/product-svc/internal/repository"
+	"github.com/raspiantoro/golang-marketplace/product-svc/internal/service"
 )
-
-type ProductCategory struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
-}
 
 func main() {
 	r := chi.NewRouter()
-	r.Get("/api/product-category", func(w http.ResponseWriter, r *http.Request) {
-		categories := []ProductCategory{
-			{
-				ID:   1,
-				Name: "Alat Tulis",
-			},
-			{
-				ID:   2,
-				Name: "Perlengkapan Rumah Tangga",
-			},
-			{
-				ID:   3,
-				Name: "Fashion",
-			},
-		}
 
-		result, err := json.Marshal(&categories)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Terjadi kesalahan pada server"))
-			return
-		}
+	productCategoryRepo := repository.NewProductCategory()
+	productCategorySvc := service.NewProductCategory(productCategoryRepo)
+	productCategoryHandler := handler.NewProductCategory(productCategorySvc)
 
-		w.WriteHeader(http.StatusOK)
-		w.Write(result)
-	})
+	r.Get("/api/product-category", productCategoryHandler.GetAll)
 
 	fmt.Println("your server is running on port 8080")
 	http.ListenAndServe(":8080", r)
