@@ -3,30 +3,29 @@ services:
 
     redis:
       image: redis:latest
-      container_name: golang-course-redis
+      container_name: golang-microservices-redis
       ports:
        - "6379:6379"
       networks:
-            golang_course_net:
+            golang_microservices_net:
                 ipv4_address: 172.28.1.1
 
     postgres:
       image: postgres:latest
-      container_name: golang-course-product-postgres
+      container_name: golang-microservices-postgres
       volumes:
          - "./data/product/postgres:/var/lib/postgresql/data"
       environment:
         - POSTGRES_USER=admin
         - POSTGRES_PASSWORD=admin
-        - POSTGRES_DB=product
       ports:
        - "5432:5432"
       networks:
-            golang_course_net:
+            golang_microservices_net:
                 ipv4_address: 172.28.1.2
     
 networks:
-    golang_course_net:
+    golang_microservices_net:
         ipam:
             driver: default
             config:
