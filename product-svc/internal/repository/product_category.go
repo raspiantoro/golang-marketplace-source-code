@@ -14,18 +14,18 @@ func NewProductCategory() *ProductCategory {
 
 func (p *ProductCategory) GetAll(ctx context.Context) ([]model.ProductCategory, error) {
 	categories := []model.ProductCategory{
-		{
-			ID:   1,
-			Name: "Alat Tulis",
-		},
-		{
-			ID:   2,
-			Name: "Perlengkapan Rumah Tangga",
-		},
-		{
-			ID:   3,
-			Name: "Fashion",
-		},
+		// {
+		// 	ID:   1,
+		// 	Name: "Alat Tulis",
+		// },
+		// {
+		// 	ID:   2,
+		// 	Name: "Perlengkapan Rumah Tangga",
+		// },
+		// {
+		// 	ID:   3,
+		// 	Name: "Fashion",
+		// },
 	}
 
 	return categories, nil
